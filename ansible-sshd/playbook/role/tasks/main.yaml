@@ -1,0 +1,17 @@
+#禁用ssh密码登录
+- name: delete PasswordAuthentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: absent
+    regexp: '^PasswordAuthentication yes'
+
+- name: change PasswordAuthentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PasswordAuthentication yes'
+    line: PasswordAuthentication no
+
+- name: restart sshd
+  service:
+    state: restarted
+    name: ssh
